@@ -174,10 +174,6 @@ Before executing a script, verify that the dataset path, output directory, and i
 
 Use the final scripts and dataset associated with the thesis when reproducing the reported analyses.
 
-## Citation
-
-If you use this code in academic work, cite the associated MSc thesis according to the university's requirements. If a `CITATION.cff` file is included, verify that its metadata is accurate before release.
-
 ## License and Data Availability
 
 The code and experimental data may be redistributed only in accordance with the applicable university requirements and permissions. This README does not imply that the repository is released under an open-source license or that unrestricted data sharing is authorized.
