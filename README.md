@@ -2,46 +2,56 @@
 
 This repository contains Python code developed for an MSc thesis project in Industrial Microbiology at the Department of Microbiology, Faculty of Biological Sciences, Alzahra University, Tehran, Iran.
 
-**Project focus:** prediction of growth responses and optimization of a defined culture medium for *Saccharomyces cerevisiae* using experimental data, machine learning, and optimization algorithms.
+**Project focus:** Prediction of growth responses and optimization of a defined culture medium for *Saccharomyces cerevisiae* using experimental data, machine learning, and optimization algorithms.
 
-> **Publication note:** Before making this repository public or redistributing experimental data, confirm that the required permission has been obtained from Alzahra University. The thesis declaration states that publication and use of thesis outputs are subject to university rules and permission.
+> **Publication note:** Before making this repository public or redistributing experimental data, confirm that the required permission has been obtained from Alzahra University and the relevant thesis supervisors.
 
-## Project overview
+## Project Overview
 
-The study examined 44 unique medium compositions: 40 combinations generated using Latin Hypercube Sampling (LHS) with a fixed seed of 123, plus four supplementary boundary combinations. Each composition was investigated with two independent laboratory replicates. The resulting dataset was used to model four growth responses.
+The study investigated **44 unique culture-medium compositions** for *Saccharomyces cerevisiae*. The experimental design consisted of 40 compositions generated using Latin Hypercube Sampling (LHS) with a random seed of 123, plus four supplementary compositions selected to cover boundary points.
+
+All 44 compositions were defined in a **single Python script**. Each composition was investigated using two independent laboratory replicates. The resulting experimental dataset was used to develop machine learning models for predicting four growth responses.
 
 Five medium components were treated as input variables. Other components of the defined Verduyn-based medium, including trace elements and vitamins, were kept constant according to the experimental formulation.
 
-## Input variables
+## Input Variables
 
-| Input variable | Chemical formula | Range used in the study | Unit |
-|---|---|---:|---|
-| Glucose | C₆H₁₂O₆ | 10–30 | g/L |
-| Ammonium sulfate | (NH₄)₂SO₄ | 2.5–7.5 | g/L |
-| Potassium dihydrogen phosphate | KH₂PO₄ | 1.5–4.5 | g/L |
-| Magnesium sulfate heptahydrate | MgSO₄·7H₂O | 0.25–0.75 | g/L |
-| Calcium chloride dihydrate | CaCl₂·2H₂O | 2.25–6.75 | mg/L |
+| Input variable                 | Chemical formula |     Range | Unit |
+| ------------------------------ | ---------------- | --------: | ---- |
+| Glucose                        | C₆H₁₂O₆          |     10–30 | g/L  |
+| Ammonium sulfate               | (NH₄)₂SO₄        |   2.5–7.5 | g/L  |
+| Potassium dihydrogen phosphate | KH₂PO₄           |   1.5–4.5 | g/L  |
+| Magnesium sulfate heptahydrate | MgSO₄·7H₂O       | 0.25–0.75 | g/L  |
+| Calcium chloride dihydrate     | CaCl₂·2H₂O       | 2.25–6.75 | mg/L |
 
-## Growth responses
+## Growth Responses
 
-The models were developed for four measured responses:
+Four experimental responses were used for model development and evaluation:
 
-- **Dry Weight** (g/L)
-- **Cell Count** (cells/mL)
-- **OD600** (optical density at 600 nm)
-- **Wet Weight** (g/L)
+* **Dry Weight** (g/L)
+* **Cell Count** (cells/mL)
+* **OD600** (optical density at 600 nm)
+* **Wet Weight** (g/L)
 
-## Methods implemented
+## Methods
 
-### Experimental design and data analysis
+### 1. Experimental Design
 
-- Latin Hypercube Sampling (LHS), with seed 123 for the 40 generated design points, followed by four boundary combinations.
-- Data preprocessing, exploratory analysis, histograms, scatter plots, and correlation analysis.
-- Z-score standardization of input variables using `StandardScaler`.
+* Generation of 40 design points using Latin Hypercube Sampling (LHS).
+* Use of random seed 123 for the LHS design.
+* Addition of four supplementary compositions to cover boundary points.
+* Definition of all 44 compositions in one Python script.
+* Experimental investigation of each composition using two independent laboratory replicates.
 
-### Machine learning models
+### 2. Data Analysis and Preprocessing
 
-Six regression models were compared for each of the four responses:
+The analysis workflow includes descriptive statistics, histograms, scatter plots, correlation analysis, and input-variable standardization where applicable.
+
+`StandardScaler` from scikit-learn was used for standardization in the relevant machine learning workflows.
+
+### 3. Machine Learning Models
+
+Six regression algorithms were compared for the four growth responses:
 
 1. Linear Regression (LR)
 2. Random Forest (RF)
@@ -50,98 +60,131 @@ Six regression models were compared for each of the four responses:
 5. Support Vector Regression (SVR)
 6. Artificial Neural Network (ANN)
 
-Model evaluation used five-fold cross-validation and the following metrics: R², MAE, and RMSE. The thesis reports that model performance depended on the response: Linear Regression performed best for Dry Weight, Cell Count, and Wet Weight, while Random Forest performed best for OD600.
+Model performance was evaluated using **five-fold cross-validation** and the following metrics:
 
-### Feature importance
+* Coefficient of determination (R²)
+* Mean Absolute Error (MAE)
+* Root Mean Squared Error (RMSE)
 
-Input-variable importance was analyzed using Linear Regression coefficients and tree-based models, including Random Forest, Gradient Boosting, and XGBoost. Glucose was ranked as the most important input for all four growth responses in the reported analysis. Feature importance represents relative model contribution and should not, on its own, be interpreted as proof of a causal biological relationship.
+According to the reported thesis results, Linear Regression performed best for Dry Weight, Cell Count, and Wet Weight, whereas Random Forest performed best for OD600.
 
-### Optimization
+### 4. Feature Importance
 
-Particle Swarm Optimization (PSO) and Bayesian Optimization were compared using Linear Regression as the predictive model for the optimization analyses reported in the thesis. The two methods reached the same predicted optimum for Dry Weight and the same predicted optimum for Cell Count within the defined variable ranges.
+Input-variable importance was investigated using Linear Regression coefficients and tree-based models, including Random Forest, Gradient Boosting, and XGBoost.
 
-For Dry Weight, the shared predicted optimum was:
+Glucose was identified as the most important input variable across all four growth responses in the reported analysis. Feature importance indicates a model-based relationship and should not, by itself, be interpreted as evidence of biological causation.
 
-| Component | Suggested concentration |
-|---|---:|
-| Glucose | 30.00 g/L |
-| Ammonium sulfate | 7.50 g/L |
-| KH₂PO₄ | 4.50 g/L |
-| MgSO₄·7H₂O | 0.75 g/L |
-| CaCl₂·2H₂O | 6.75 mg/L |
-| **Predicted Dry Weight** | **14.753 g/L** |
+### 5. Optimization
 
-The experimental validation of this formulation gave a mean Dry Weight of **14.840 g/L** across two laboratory replicates, corresponding to an absolute difference of approximately 0.087 g/L and a relative error of approximately 0.59% compared with the model prediction.
+Particle Swarm Optimization (PSO) and Bayesian Optimization were used with Linear Regression as the predictive model for the optimization analyses reported in the thesis.
 
-These optima are model-based results within the investigated ranges; they should not be interpreted as globally optimal concentrations outside the ranges studied.
+Both methods identified the same predicted optimum for Dry Weight and the same predicted optimum for Cell Count within the investigated variable ranges.
 
-## Repository structure
+#### Predicted optimum for Dry Weight
 
-The directory names below reflect the suggested English naming for this project. Keep the README synchronized with the actual files present in the repository.
+| Component                | Predicted optimum concentration |
+| ------------------------ | ------------------------------: |
+| Glucose                  |                       30.00 g/L |
+| Ammonium sulfate         |                        7.50 g/L |
+| KH₂PO₄                   |                        4.50 g/L |
+| MgSO₄·7H₂O               |                        0.75 g/L |
+| CaCl₂·2H₂O               |                       6.75 mg/L |
+| **Predicted Dry Weight** |                  **14.753 g/L** |
+
+The optimized formulation was experimentally evaluated using two laboratory replicates, giving a mean Dry Weight of **14.840 g/L**.
+
+The absolute difference between the predicted and experimental mean values was approximately **0.087 g/L**, corresponding to a relative error of approximately **0.59%**.
+
+These results represent model-based optima within the investigated ranges and do not establish a global optimum outside those ranges.
+
+## Repository Structure
+
+The repository is organized into the following directories:
 
 ```text
-.
+yeast-medium-optimization/
 ├── data/
-│   └── saccharomyces-cerevisiae-culture-dataset.xlsx
 ├── experimental-design/
-│   └── generate_lhs_design.py
-├── feature-importance/
-│   └── analyze_feature_importance.py
 ├── model-training-evaluation/
-│   └── scripts for the six models and four responses
+├── feature-importance/
 ├── pso-optimization/
-│   └── scripts for Dry Weight and Cell Count
-├── bayesian-optimization/       # include if those scripts are part of the repository
-├── results/                     # include approved final tables/figures if available
+├── bayesian-optimization/
 ├── README.md
+├── README-fa.md
 ├── requirements.txt
 ├── .gitignore
 └── CITATION.cff
 ```
 
-The names of example scripts above are suggestions. Replace them in this README if your uploaded filenames are different. The thesis also reports a Bayesian Optimization comparison; if its code is not included, do not describe the repository as containing the complete computational workflow until that code is added or the README is adjusted.
+* `data/`: Experimental dataset files, subject to publication permission.
+* `experimental-design/`: The Python script defining the 40 LHS-generated compositions and four supplementary boundary compositions.
+* `model-training-evaluation/`: Scripts for training and comparing the six regression models across the four growth responses.
+* `feature-importance/`: Scripts for analyzing the relative importance of input variables.
+* `pso-optimization/`: Scripts for optimization using Particle Swarm Optimization.
+* `bayesian-optimization/`: Scripts for Bayesian Optimization.
+* `results/`: Final tables, figures, and other approved analysis outputs.
 
-## Software environment
+The directory structure describes the organization of the project. The actual filenames and available scripts should be kept consistent with the files committed to the repository.
 
-The thesis documents Python 3.8 and the following package versions: NumPy 1.24.4, pandas 2.0.3, Matplotlib 3.7.5, Seaborn 0.13.2, SciPy 1.10.1, scikit-learn 1.3.2, and openpyxl 3.1.5. The exact versions of XGBoost and the package used to implement Bayesian Optimization were not specified in the thesis text available for this README. Those versions should be checked against the original working environment before claiming exact reproducibility.
+## Software Environment
 
-## Setup
+The thesis documents the following software environment:
 
-Create an environment using the Python version used for the analyses where possible, then install the listed dependencies:
+* Python 3.8
+* NumPy 1.24.4
+* pandas 2.0.3
+* Matplotlib 3.7.5
+* Seaborn 0.13.2
+* SciPy 1.10.1
+* scikit-learn 1.3.2
+* openpyxl 3.1.5
 
-```bash
-python -m venv .venv
-```
+The exact versions of XGBoost and the package used for Bayesian Optimization should be verified against the original working environment before claiming complete reproducibility.
 
-On Windows:
+## Setup and Installation
+
+Create and activate a virtual environment.
+
+**Windows:**
 
 ```powershell
+python -m venv .venv
 .venv\Scripts\activate
 ```
 
-On macOS or Linux:
+**macOS or Linux:**
 
 ```bash
+python -m venv .venv
 source .venv/bin/activate
 ```
 
-Install packages:
+Install the required dependencies:
 
 ```bash
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 ```
 
-Run the relevant Python script from its folder or from the repository root, depending on the paths defined in the script. Before running, verify that the path to the Excel dataset and any output folders matches the repository's actual structure. Some scripts may need their input/output paths adjusted to use relative paths.
+Before executing a script, verify that the input dataset path, output directory, and installed dependencies match the current repository structure.
 
-## Reproducibility and interpretation
+## Reproducibility
 
-- The LHS design used seed 123 for the 40 generated design points.
-- Model comparison used five-fold cross-validation.
-- The final analyzed dataset is described in the thesis as 44 unique medium compositions.
-- Preserve the original experimental observations and distinguish measured values from model predictions.
-- Re-run the analysis scripts and check that generated results agree with the final thesis tables before publishing a release.
+* The LHS design used random seed 123 for the 40 generated design points.
+* Four supplementary compositions were added to cover boundary points.
+* The final experimental design comprised 44 unique medium compositions.
+* Each composition was investigated using two independent laboratory replicates.
+* Model evaluation used five-fold cross-validation.
+* Experimental observations should be distinguished clearly from model predictions and optimization outputs.
+
+For reproducibility, use the final scripts and dataset associated with the thesis and verify the generated outputs against the reported results.
 
 ## Citation
 
-If you use or discuss this code in academic work, cite the associated MSc thesis and its author in accordance with the university's requirements. A minimal citation record is provided in `CITATION.cff`; confirm the citation details and publication permission before public release.
+If you use this code in academic work, cite the associated MSc thesis according to the university's requirements. Check `CITATION.cff` for the available citation metadata and verify its details before release.
+
+## License and Data Availability
+
+The code and experimental data should only be redistributed in accordance with the applicable university requirements and permissions. No open-source license or unrestricted data-sharing permission is implied by this README.
+
+
