@@ -121,7 +121,6 @@ yeast-medium-optimization/
 * `pso-optimization/`: Scripts for optimization using Particle Swarm Optimization.
 * `bayesian-optimization/`: Scripts for Bayesian Optimization.
 
-Keep the directory structure and descriptions consistent with the files actually included in the repository.
 
 ## Software Environment
 
