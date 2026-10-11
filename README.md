@@ -122,7 +122,6 @@ yeast-medium-optimization/
 * `feature-importance/`: Scripts for analyzing the relative importance of input variables.
 * `pso-optimization/`: Scripts for optimization using Particle Swarm Optimization.
 * `bayesian-optimization/`: Scripts for Bayesian Optimization.
-* `results/`: Final tables, figures, and other approved analysis outputs.
 
 The directory structure describes the organization of the project. The actual filenames and available scripts should be kept consistent with the files committed to the repository.
 
