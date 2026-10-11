@@ -98,7 +98,7 @@ These results represent model-based optima within the investigated ranges and do
 
 ## Repository Structure
 
-The following directory layout is a suggested organizational structure. The actual directory and file names should match the contents of the repository.
+The following is the directory structure of this project.
 
 ```text
 yeast-medium-optimization/
